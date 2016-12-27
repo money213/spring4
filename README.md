@@ -9,7 +9,8 @@ Maven 3.3.3
 JSTL 1.2
 2. To Run this project locally
 
-$ git clone https://github.com/viralpatel/spring4-mvc-example
+$ git clone https://github.com/money213/spring4
+
 $ mvn tomcat7:run
 Access http://localhost:8080/spring4/hello
 
