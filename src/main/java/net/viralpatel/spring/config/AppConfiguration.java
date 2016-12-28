@@ -1,4 +1,4 @@
-package com.websystique.springmvc.configuration;
+package net.viralpatel.spring.config;
 
 import java.util.Properties;
 
@@ -11,28 +11,29 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.support.JdbcAccessor;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "com.websystique.springmvc.configuration" })
+@ComponentScan({ "net.viralpatel.spring.config" })
 @PropertySource(value = { "classpath:application.properties" })
-public class HibernateConfiguration {
+public class AppConfiguration {
 
     @Autowired
     private Environment environment;
 
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] { "com.websystique.springmvc.model" });
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
-     }
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() {
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource());
+//        sessionFactory.setPackagesToScan(new String[] { "com.websystique.springmvc.model" });
+//        sessionFactory.setHibernateProperties(hibernateProperties());
+//        return sessionFactory;
+//     }
 	
     @Bean
     public DataSource dataSource() {
@@ -42,6 +43,11 @@ public class HibernateConfiguration {
         dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
         dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
         return dataSource;
+    }
+    
+    @Bean
+    public JdbcAccessor jdbcTemplate(){
+      return new JdbcTemplate(dataSource());
     }
     
     private Properties hibernateProperties() {

@@ -1,4 +1,4 @@
-package com.websystique.springmvc.configuration;
+package net.viralpatel.spring.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,8 +16,7 @@ public class AppInitializer implements WebApplicationInitializer {
 		ctx.register(AppConfig.class);
 		ctx.setServletContext(container);
 
-		ServletRegistration.Dynamic servlet = container.addServlet(
-				"dispatcher", new DispatcherServlet(ctx));
+		ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
 
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
